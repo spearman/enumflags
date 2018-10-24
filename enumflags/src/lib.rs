@@ -3,6 +3,8 @@
 extern crate std;
 #[cfg(feature = "nostd")]
 extern crate core as std;
+#[cfg(feature = "serde")]
+#[macro_use] extern crate serde;
 
 use std::ops::{BitAnd, BitOr, BitXor, Not};
 use std::cmp::PartialOrd;
@@ -39,6 +41,7 @@ pub trait RawBitFlags: Copy + Clone {
     fn bits(self) -> Self::Type;
 }
 
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Copy, Clone)]
 pub struct BitFlags<T: RawBitFlags> {
     val: T::Type,
